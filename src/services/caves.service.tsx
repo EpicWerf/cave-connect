@@ -1,26 +1,25 @@
-// import { collection } from "firebase/firestore";
-// import { db } from "../firebaseConfig";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebaseConfig";
+import { Cave } from "../types/Cave.types";
 
-// // const db = firebase.collection("/tutorials");
-// // const cavesCollection = collection(db, "caves");
+async function getAllCaves(): Promise<Cave[]> {
+	try {
+		const querySnapshot = await getDocs(collection(db, "caves"));
 
+		let allCaves: Cave[] = [];
+		allCaves = querySnapshot.docs.map((doc) => ({
+			name: doc.data().name,
+			date_visited: doc.data().date_visited,
+			notes: doc.data().notes,
+			location: doc.data().location,
+			description: doc.data().description,
+		}));
 
-class CavesDataService {
-// 	getAll() {
-// 		return db;
-// 	}
-
-// 	// create(tutorial) {
-// 	// 	return db.app.
-// 	// }
-
-// 	// update(id, value) {
-// 	// 	return db.doc(id).update(value);
-// 	// }
-
-// 	// delete(id) {
-// 	// 	return db.doc(id).delete();
-// 	// }
+        return allCaves;
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
 }
 
-export default new CavesDataService();
+export default getAllCaves;
