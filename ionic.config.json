@@ -1,0 +1,7 @@
+{
+  "name": "cave-connect",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
