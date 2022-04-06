@@ -1,7 +1,7 @@
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { db } from "./firebaseConfig";
-import getAllCaves from "./services/caves.service";
+import { db, getAllCaves } from "./services/firestore";
+// import getAllCaves from "./services/caves.service";
 import { Cave } from "./types/Cave.types";
 
 export const streamCaves = (snapshot: any, error: any) => {
