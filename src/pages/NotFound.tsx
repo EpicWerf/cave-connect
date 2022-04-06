@@ -1,34 +1,49 @@
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import { useParams } from 'react-router';
-import CavesList from '../CavesList';
-import ExploreContainer from '../components/ExploreContainer';
+import {
+	IonButtons,
+	IonCard,
+	IonCardTitle,
+	IonContent,
+	IonHeader,
+	IonMenuButton,
+	IonPage,
+	IonTitle,
+	IonToolbar,
+} from "@ionic/react";
+import { Player } from "@lottiefiles/react-lottie-player";
+import { useEffect } from "react";
+import "./NotFound.css";
 
 const NotFound: React.FC = () => {
+	useEffect(() => {
+		document.title = "404 Not Found";
+	}, []);
 
-  const { name } = useParams<{ name: string; }>();
+	return (
+		<>
+			<IonPage>
+				<IonHeader>
+					<IonToolbar>
+						<IonButtons slot="start">
+							<IonMenuButton />
+						</IonButtons>
+					</IonToolbar>
+				</IonHeader>
 
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>{name}</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">not found!!!! {name}</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name={name} />
-        <CavesList />
-      </IonContent>
-    </IonPage>
-  );
+				<IonContent>
+					<IonCard className="not-found-card">
+						<IonCardTitle className="ion-text-center">
+							<Player
+								autoplay
+								loop
+								src="https://assets3.lottiefiles.com/packages/lf20_u1xuufn3.json"
+							></Player>
+							Unable to find the requested web page, please verify and try again!
+						</IonCardTitle>
+					</IonCard>
+				</IonContent>
+			</IonPage>
+		</>
+	);
 };
 
 export default NotFound;
