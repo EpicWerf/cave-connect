@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { collection, getDocs, getFirestore, initializeFirestore } from "firebase/firestore";
+import { addDoc, collection, getDocs, getFirestore, initializeFirestore } from "firebase/firestore";
 import { Cave } from "../types/Cave.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -21,7 +21,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-const db = getFirestore(app)
+const db = getFirestore(app);
 export { db };
 
 /////////////////// HOOKS TO INTERACT WITH FIRESTORE ///////////////////
@@ -31,8 +31,9 @@ export async function getAllCaves(): Promise<Cave[]> {
 		const querySnapshot = await getDocs(collection(db, "caves"));
 
 		let allCaves: Cave[] = [];
-		
+
 		allCaves = querySnapshot.docs.map((doc) => ({
+			key: doc.id,
 			name: doc.data().name,
 			date_visited: doc.data().date_visited,
 			notes: doc.data().notes,
@@ -40,7 +41,19 @@ export async function getAllCaves(): Promise<Cave[]> {
 			description: doc.data().description,
 		}));
 
-        return allCaves;
+		return allCaves;
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
+}
+
+export async function addCave(caveData: Cave): Promise<string | any> {
+	try {
+		const addCave = await addDoc(collection(db, "caves"), caveData);
+
+		console.log(addCave);
+		console.log("wrote to DB successfully");
 	} catch (error: any) {
 		console.log(error);
 		return error;

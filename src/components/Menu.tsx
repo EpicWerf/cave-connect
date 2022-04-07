@@ -38,13 +38,7 @@ interface AppPage {
 const appPages: AppPage[] = [
 	{
 		title: "Sign In",
-		url: "/page/all-caves-list",
-		iosIcon: mailOutline,
-		mdIcon: mailSharp,
-	},
-	{
-		title: "All Caves List",
-		url: "/page/all-caves-list",
+		url: "/page/sign-in",
 		iosIcon: mailOutline,
 		mdIcon: mailSharp,
 	},

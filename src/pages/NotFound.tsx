@@ -6,7 +6,6 @@ import {
 	IonHeader,
 	IonMenuButton,
 	IonPage,
-	IonTitle,
 	IonToolbar,
 } from "@ionic/react";
 import { Player } from "@lottiefiles/react-lottie-player";

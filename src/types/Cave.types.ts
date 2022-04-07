@@ -1,10 +1,13 @@
 import { GeoPoint } from "firebase/firestore";
 
 export interface Cave {
-	// key: string;
+	key?: string;
 	name: string;
 	date_visited: Date;
 	description: string;
-	location: GeoPoint;
+	location: {
+		latitude: number;
+		longitude: number;
+	};
 	notes: string;
 }
