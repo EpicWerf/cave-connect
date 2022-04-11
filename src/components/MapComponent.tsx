@@ -1,29 +1,31 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { compose, withProps } from "recompose";
-import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps";
+import { GoogleMap, InfoBox, LoadScript, Marker } from "@react-google-maps/api";
+import { MAPS_API_KEY } from "../services/MapsApiKey";
+
+const containerStyle = {
+	width: "100%",
+	height: "400px",
+};
 
 interface MapProps {
-	isMarkerShown: boolean;
 	lat: number;
 	lng: number;
 }
 
-const MapComponent = compose(
-	withProps({
-		googleMapURL:
-			"https://maps.googleapis.com/maps/api/js?key=AIzaSyB9qmCkjeFukzQn8guCgn8W8wF7RS0mvus&v=3.exp&libraries=geometry,drawing,places",
-		loadingElement: <div style={{ height: `100%` }} />,
-		containerElement: <div style={{ height: `400px` }} />,
-		mapElement: <div style={{ height: `100%`, }} />,
-	}),
-	withScriptjs,
-	withGoogleMap
-)((props) => (
-	<GoogleMap defaultZoom={8} defaultCenter={{ lat: -34.397, lng: 150.644 }}>
-		{/* {props.isMarkerShown && <Marker position={{ lat: -34.397, lng: 150.644 }} />} */}
-	</GoogleMap>
-));
+function MapComponent(props: MapProps) {
+	const { lat, lng } = props;
+	const caveLocation = {
+		lat: lat,
+		lng: lng,
+	};
+	return (
+		<LoadScript googleMapsApiKey={MAPS_API_KEY}>
+			<GoogleMap mapContainerStyle={containerStyle} center={caveLocation} zoom={10}>
+				{/* Child components, such as markers, info windows, etc. */}
+				<Marker position={caveLocation}  />
+			</GoogleMap>
+		</LoadScript>
+	);
+}
 
-export default MapComponent;
-// ReactDOM.render(<MyMapComponent isMarkerShown />, document.getElementById("root"));
+export default React.memo(MapComponent);

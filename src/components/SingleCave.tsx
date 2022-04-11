@@ -69,8 +69,10 @@ const SingleCave: React.FC<ContainerProps> = ({ caveKey }) => {
 							Delete {cave?.name}
 						</IonButton>
 					</IonItem>
+					<MapComponent lat={parseFloat("40.270050079244854")} lng={parseFloat("-111.68148898577512")}></MapComponent>
+					{/* <MapComponent lat={parseFloat(cave!.location.latitude)} lng={parseFloat(cave!.location.longitude)}></MapComponent> */}
+
 				</IonCardContent>
-				<MapComponent ></MapComponent>
 			</IonCard>
 		</div>
 	);
