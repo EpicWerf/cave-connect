@@ -1,4 +1,4 @@
-import { IonCard, IonIcon, IonItem, IonLabel, IonTitle } from "@ionic/react";
+import { IonButton, IonCard, IonIcon, IonItem, IonLabel, IonTitle } from "@ionic/react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { pin } from "ionicons/icons";
 import { useEffect, useState } from "react";
@@ -34,12 +34,22 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 			<IonCard>
 				{caves.map((cave) => (
 					<div key={cave.key}>
-						<IonItem href="#" className="ion-activated">
+						<IonItem href={`cave/${cave.key}`} className="ion-activated">
 							<IonIcon icon={pin} slot="start" />
 							<IonLabel>{cave.name}</IonLabel>
 						</IonItem>
 					</div>
 				))}
+				<IonItem color="none">
+					<IonButton
+						className="delete-button"
+						color="primary"
+						fill="solid"
+						size="default"
+						onClick={() => window.location.href = "/page/add-cave"}
+					> Add New Cave
+					</IonButton>
+				</IonItem>
 			</IonCard>
 		</div>
 	);

@@ -1,7 +1,16 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { addDoc, collection, getDocs, getFirestore, initializeFirestore } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	deleteDoc,
+	doc,
+	getDoc,
+	getDocs,
+	getFirestore,
+	initializeFirestore,
+} from "firebase/firestore";
 import { Cave } from "../types/Cave.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -48,12 +57,46 @@ export async function getAllCaves(): Promise<Cave[]> {
 	}
 }
 
-export async function addCave(caveData: Cave): Promise<string | any> {
+export async function addCave(caveData: Cave): Promise<void> {
 	try {
-		const addCave = await addDoc(collection(db, "caves"), caveData);
-
-		console.log(addCave);
+		await addDoc(collection(db, "caves"), caveData);
 		console.log("wrote to DB successfully");
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
+}
+
+export async function getSingleCave(caveKey: string): Promise<Cave> {
+	try {
+		const docRef = doc(db, "caves", caveKey);
+		const docSnap = await getDoc(docRef);
+
+		let singleCave: Cave = {} as Cave;
+		console.log(docSnap.data());
+
+		if (docSnap.exists()) {
+			singleCave = {
+				key: docSnap.id,
+				name: docSnap.data().name,
+				date_visited: docSnap.data().date_visited.toDate(),
+				notes: docSnap.data().notes,
+				location: docSnap.data().location,
+				description: docSnap.data().description,
+			};
+		}
+
+		return singleCave;
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
+}
+
+export async function deleteCave(caveKey: string): Promise<void> {
+	try {
+		await deleteDoc(doc(db, "caves", caveKey));
+		console.log(`deleted ${caveKey} from DB successfully`);
 	} catch (error: any) {
 		console.log(error);
 		return error;

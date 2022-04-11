@@ -1,10 +1,4 @@
-import {
-	IonItem,
-	IonLabel,
-	IonInput,
-	IonButton,
-	IonTextarea,
-} from "@ionic/react";
+import { IonItem, IonLabel, IonInput, IonButton, IonTextarea } from "@ionic/react";
 import { useState } from "react";
 import { Redirect } from "react-router";
 import { addCave } from "../services/firestore";
@@ -21,7 +15,7 @@ const AddCave: React.FC<ContainerProps> = ({ name, friendlyName }) => {
 		name: "",
 		date_visited: new Date(),
 		description: "",
-		location: { latitude: 0, longitude: 0 },
+		location: { latitude: "", longitude: "" },
 		notes: "",
 	});
 	const [submitted, setSubmitted] = useState(false);
