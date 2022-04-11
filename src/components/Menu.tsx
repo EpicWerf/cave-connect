@@ -36,20 +36,20 @@ interface AppPage {
 }
 
 const appPages: AppPage[] = [
+	// {
+	// 	title: "Sign In",
+	// 	url: "/page/sign-in",
+	// 	iosIcon: mailOutline,
+	// 	mdIcon: mailSharp,
+	// },
 	{
-		title: "Sign In",
-		url: "/page/sign-in",
-		iosIcon: mailOutline,
-		mdIcon: mailSharp,
-	},
-	{
-		title: "All Caves List",
+		title: "Caves List",
 		url: "/page/all-caves-list",
 		iosIcon: mailOutline,
 		mdIcon: mailSharp,
 	},
 	{
-		title: "All Caves Map",
+		title: "Caves Map",
 		url: "/page/all-caves-map",
 		iosIcon: heartOutline,
 		mdIcon: heartSharp,
@@ -62,7 +62,7 @@ const appPages: AppPage[] = [
 	},
 ];
 
-const labels = ["Family", "Friends", "Notes", "Work", "Travel", "Reminders"];
+// const labels = ["Family", "Friends", "Notes", "Work", "Travel", "Reminders"];
 
 const Menu: React.FC = () => {
 	const location = useLocation();
@@ -90,7 +90,7 @@ const Menu: React.FC = () => {
 					})}
 				</IonList>
 
-				<IonList id="labels-list">
+				{/* <IonList id="labels-list">
 					<IonListHeader>Labels</IonListHeader>
 					{labels.map((label, index) => (
 						<IonItem lines="none" key={index}>
@@ -98,7 +98,7 @@ const Menu: React.FC = () => {
 							<IonLabel>{label}</IonLabel>
 						</IonItem>
 					))}
-				</IonList>
+				</IonList> */}
 			</IonContent>
 		</IonMenu>
 	);

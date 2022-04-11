@@ -1,4 +1,14 @@
-import { IonButton, IonCard, IonIcon, IonItem, IonLabel, IonTitle } from "@ionic/react";
+import {
+	IonButton,
+	IonCard,
+	IonCardContent,
+	IonContent,
+	IonIcon,
+	IonItem,
+	IonLabel,
+	IonList,
+	IonSearchbar,
+} from "@ionic/react";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { pin } from "ionicons/icons";
 import { useEffect, useState } from "react";
@@ -18,7 +28,7 @@ interface ContainerProps {
 
 const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 	const [caves, setCaves] = useState<Cave[]>([]);
-	const [error, setError] = useState<any>();
+	const [searchText, setSearchText] = useState("");
 
 	useEffect(() => {
 		const fetchCaves = async () => {
@@ -30,24 +40,29 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 
 	return (
 		<div className="container">
-			<IonTitle className="ion-text-center">{friendlyName}</IonTitle>
 			<IonCard>
+				<IonSearchbar
+					value={searchText}
+					onIonChange={(e) => setSearchText(e.detail.value!)}
+					showCancelButton="focus"
+				></IonSearchbar>
 				{caves.map((cave) => (
-					<div key={cave.key}>
+					<IonList key={cave.key}>
 						<IonItem href={`cave/${cave.key}`} className="ion-activated">
 							<IonIcon icon={pin} slot="start" />
 							<IonLabel>{cave.name}</IonLabel>
 						</IonItem>
-					</div>
+					</IonList>
 				))}
-				<IonItem color="none">
+				<IonItem>
 					<IonButton
-						className="delete-button"
+						className="ion-text-center"
 						color="primary"
 						fill="solid"
 						size="default"
-						onClick={() => window.location.href = "/page/add-cave"}
-					> Add New Cave
+						onClick={() => (window.location.href = "/page/add-cave")}
+					>
+						Add New Cave
 					</IonButton>
 				</IonItem>
 			</IonCard>

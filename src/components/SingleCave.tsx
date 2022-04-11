@@ -7,11 +7,13 @@ import {
 	IonCardTitle,
 	IonItem,
 } from "@ionic/react";
+import { GoogleMap, Marker } from "@react-google-maps/api";
 import { collection, onSnapshot, query } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { db, deleteCave, getSingleCave } from "../services/firestore";
 import { Cave } from "../types/Cave.types";
 import "./AllCavesList.css";
+import MapComponent from "./MapComponent";
 
 export const streamCaves = (snapshot: any, error: any) => {
 	const cavesCollection = collection(db, "caves");
@@ -23,7 +25,7 @@ interface ContainerProps {
 	caveKey: string;
 }
 
-const CaveComponent: React.FC<ContainerProps> = ({ caveKey }) => {
+const SingleCave: React.FC<ContainerProps> = ({ caveKey }) => {
 	const [cave, setCave] = useState<Cave>();
 
 	//delete the cave and send the user back to the list of caves
@@ -68,9 +70,10 @@ const CaveComponent: React.FC<ContainerProps> = ({ caveKey }) => {
 						</IonButton>
 					</IonItem>
 				</IonCardContent>
+				<MapComponent ></MapComponent>
 			</IonCard>
 		</div>
 	);
 };
 
-export default CaveComponent;
+export default SingleCave;

@@ -9,11 +9,11 @@ import {
 } from "@ionic/react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import CavesList from "../components/AllCavesList";
 import AddCave from "../components/AddCave";
 import AllCavesList from "../components/AllCavesList";
 import "./Page.css";
-import CaveComponent from "../components/CaveComponent";
+import CaveComponent from "../components/SingleCave";
+import AllCavesMap from "../components/MapComponent";
 
 const Page: React.FC = () => {
 	const { name, key } = useParams<{ name: string; key: string }>();
@@ -23,9 +23,9 @@ const Page: React.FC = () => {
 		if (name === "add-cave") {
 			setFriendlyName("Add Cave");
 		} else if (name === "all-caves-list") {
-			setFriendlyName("All Caves List");
+			setFriendlyName("Caves List");
 		} else if (name === "all-caves-map") {
-			setFriendlyName("All Caves Map");
+			setFriendlyName("Caves Map");
 		} else if (name === "sign-in") {
 			setFriendlyName("Sign In");
 		} else {
@@ -49,11 +49,14 @@ const Page: React.FC = () => {
 			<IonContent fullscreen>
 				<IonHeader collapse="condense">
 					<IonToolbar>
-						<IonTitle size="large">{friendlyName}</IonTitle>
+						<IonTitle className="ion-text-center" size="large">
+							{friendlyName}
+						</IonTitle>
 					</IonToolbar>
 				</IonHeader>
 				{name === "add-cave" ? <AddCave name={name} friendlyName={friendlyName} /> : ""}
 				{name === "all-caves-list" ? <AllCavesList friendlyName={friendlyName} /> : ""}
+				{/* {name === "all-caves-map" ? <AllCavesMap /> : ""} */}
 				{key ? <CaveComponent caveKey={key} /> : ""}
 			</IonContent>
 		</IonPage>
