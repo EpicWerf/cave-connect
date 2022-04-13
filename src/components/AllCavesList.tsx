@@ -11,19 +11,11 @@ import {
 	IonList,
 	IonSearchbar,
 } from "@ionic/react";
-import { collection, onSnapshot, query } from "firebase/firestore";
-import { db, deleteCave, getAllCaves } from "../services/firestore";
+import { deleteCave, getAllCaves } from "../services/firestore";
 import { useEffect, useState } from "react";
 import { Cave } from "../types/Cave.types";
 import { pin } from "ionicons/icons";
 import "./AllCavesList.css";
-import { Redirect } from "react-router";
-
-export const streamCaves = (snapshot: any, error: any) => {
-	const cavesCollection = collection(db, "caves");
-	const cavesQuery = query(cavesCollection);
-	return onSnapshot(cavesQuery, snapshot, error);
-};
 
 interface ContainerProps {
 	friendlyName: string;
@@ -32,12 +24,17 @@ interface ContainerProps {
 const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 	const [caves, setCaves] = useState<Cave[]>([]);
 	const [searchText, setSearchText] = useState("");
+	const [filteredCaves, setFilteredCaves] = useState<Cave[]>([]);
 
-	const deleteCaveAndReturn = async (caveKey: string | undefined) => {
-		await deleteCave(caveKey);
-		window.location.href = "/page/all-caves-list";
-	};
+	//Handle search filtering
+	useEffect(() => {
+		let tempSearchResult = caves.filter((ele) =>
+			ele.name.toLowerCase().includes(searchText.toLowerCase())
+		);
+		setFilteredCaves([...tempSearchResult]);
+	}, [searchText, caves]);
 
+	//Get all caves from firestore
 	useEffect(() => {
 		const fetchCaves = async () => {
 			const response = await getAllCaves();
@@ -45,6 +42,11 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 		};
 		fetchCaves();
 	}, []);
+
+	const deleteCaveAndReturn = async (caveKey: string | undefined) => {
+		await deleteCave(caveKey);
+		window.location.href = "/page/all-caves-list";
+	};
 
 	return (
 		<>
@@ -57,7 +59,7 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 				></IonSearchbar>
 				<IonCardContent>
 					<IonList className="container" lines="none">
-						{caves.map((cave) => (
+						{filteredCaves.map((cave) => (
 							<IonItemSliding key={cave.key}>
 								<IonItem href={`cave/${cave.key}`} className="ion-activated">
 									<IonIcon icon={pin} slot="start" />
