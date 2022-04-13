@@ -11,7 +11,7 @@ import {
 	getFirestore,
 	initializeFirestore,
 } from "firebase/firestore";
-import { Cave } from "../types/Cave.types";
+import { Cave, Coordinate } from "../types/Cave.types";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -71,8 +71,8 @@ export async function getSingleCave(caveKey: string): Promise<Cave> {
 				date_visited: docSnap.data().date_visited.toDate(),
 				notes: docSnap.data().notes,
 				location: {
-					latitude: docSnap.data().location.latitude,
-					longitude: docSnap.data().location.longitude,
+					lat: docSnap.data().location.lat,
+					lng: docSnap.data().location.lng,
 				},
 				description: docSnap.data().description,
 			};
@@ -85,10 +85,28 @@ export async function getSingleCave(caveKey: string): Promise<Cave> {
 	}
 }
 
+export async function getAllCoordinates(): Promise<Coordinate[]> {
+	try {
+		const querySnapshot = await getDocs(collection(db, "caves"));
+
+		let allCoordinates: Coordinate[] = [];
+
+		allCoordinates = querySnapshot.docs.map((doc) => ({
+			lat: doc.data().location.lat,
+			lng: doc.data().location.lng,
+		}));
+
+		return allCoordinates;
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
+}
+
 export async function addCave(caveData: Cave): Promise<void> {
 	try {
-		caveData.location.latitude = Number(caveData.location.latitude);
-		caveData.location.longitude = Number(caveData.location.longitude);
+		caveData.location.lat = Number(caveData.location.lat);
+		caveData.location.lng = Number(caveData.location.lng);
 
 		await addDoc(collection(db, "caves"), caveData);
 		console.log("wrote to DB successfully");

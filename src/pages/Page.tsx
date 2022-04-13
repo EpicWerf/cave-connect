@@ -13,7 +13,7 @@ import AddCave from "../components/AddCave";
 import AllCavesList from "../components/AllCavesList";
 import "./Page.css";
 import CaveComponent from "../components/SingleCave";
-import AllCavesMap from "../components/MapComponent";
+import AllCavesMap from "../components/AllCavesMap";
 
 const Page: React.FC = () => {
 	const { name, key } = useParams<{ name: string; key: string }>();
@@ -26,10 +26,6 @@ const Page: React.FC = () => {
 			setFriendlyName("Caves List");
 		} else if (name === "all-caves-map") {
 			setFriendlyName("Caves Map");
-		} else if (name === "sign-in") {
-			setFriendlyName("Sign In");
-		} else if (name === "sign-in") {
-			setFriendlyName("Sign In");
 		} else {
 			setFriendlyName("");
 		}
@@ -44,13 +40,14 @@ const Page: React.FC = () => {
 					<IonButtons slot="start">
 						<IonMenuButton />
 					</IonButtons>
-					<IonTitle>{friendlyName ? friendlyName : 'Cave'}</IonTitle>
+					<IonTitle>{friendlyName ? friendlyName : "Cave"}</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 
 			<IonContent fullscreen>
 				{name === "add-cave" ? <AddCave name={name} friendlyName={friendlyName} /> : ""}
 				{name === "all-caves-list" ? <AllCavesList friendlyName={friendlyName} /> : ""}
+				{name === "all-caves-map" ? <AllCavesMap /> : ""}
 				{key ? <CaveComponent caveKey={key} /> : ""}
 			</IonContent>
 		</IonPage>

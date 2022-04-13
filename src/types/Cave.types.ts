@@ -3,20 +3,17 @@ export interface Cave {
 	name: string;
 	date_visited: Date;
 	description: string;
-	location: {
-		latitude: number;
-		longitude: number;
-	};
+	location: Coordinate;
 	notes: string;
 }
 
-export interface Position {
+export interface Coordinate {
 	lat: number;
 	lng: number;
 }
 
 export interface Marker {
-	position: Position;
+	position: Coordinate;
 	label: string;
 	viewAltitude: number;
 }

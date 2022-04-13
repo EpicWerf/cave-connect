@@ -31,7 +31,7 @@ const SingleCave: React.FC<ContainerProps> = ({ caveKey }) => {
 		name: "",
 		date_visited: new Date(),
 		description: "",
-		location: { latitude: 0, longitude: 0 },
+		location: { lat: 0, lng: 0 },
 		notes: "",
 	});
 	const [cityState, setCityState] = useState<string>();
@@ -46,7 +46,7 @@ const SingleCave: React.FC<ContainerProps> = ({ caveKey }) => {
 			const cityState = await geocodeLatLng(lat, lng);
 			setCityState(cityState);
 		};
-		getCityState(cave.location.latitude, cave.location.longitude);
+		getCityState(cave.location.lat, cave.location.lng);
 	}, [cave]);
 
 	useEffect(() => {
@@ -86,9 +86,11 @@ const SingleCave: React.FC<ContainerProps> = ({ caveKey }) => {
 					Delete {cave.name}
 				</IonButton>
 				<MapComponent
-					lat={cave.location.latitude}
-					lng={cave.location.longitude}
+					locations={[cave.location]}
 					name={cave.name}
+					mapHeight={"400px"}
+					mapWidth={"100%"}
+					zoomLevel={10}
 				></MapComponent>
 			</IonCard>
 		</>

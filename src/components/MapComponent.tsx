@@ -1,29 +1,35 @@
 import React from "react";
 import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MAPS_API_KEY } from "../services/MapsApiKey";
-
-const containerStyle = {
-	width: "100%",
-	height: "400px",
-};
+import { Coordinate } from "../types/Cave.types";
 
 interface MapProps {
-	lat: number;
-	lng: number;
+	locations: Coordinate[];
 	name: string | undefined;
+	mapHeight: string;
+	mapWidth: string;
+	zoomLevel: number;
 }
 
 function MapComponent(props: MapProps) {
-	const { lat, lng, name } = props;
+	const { locations, name, mapHeight, mapWidth, zoomLevel } = props;
+
+	const containerStyle = {
+		width: mapWidth,
+		height: mapHeight,
+	};
+
 	const caveLocation = {
-		lat: lat,
-		lng: lng,
+		lat: locations[0].lat,
+		lng: locations[0].lng,
 	};
 
 	return (
 		<LoadScript googleMapsApiKey={MAPS_API_KEY}>
-			<GoogleMap mapContainerStyle={containerStyle} center={caveLocation} zoom={10}>
-				{caveLocation ? <Marker position={caveLocation} label={name} /> : null}
+			<GoogleMap mapContainerStyle={containerStyle} center={caveLocation} zoom={zoomLevel}>
+				{locations.map((location, index) => (
+					<Marker key={index} label={name} position={{ lat: location.lat, lng: location.lng }} />
+				))}
 			</GoogleMap>
 		</LoadScript>
 	);

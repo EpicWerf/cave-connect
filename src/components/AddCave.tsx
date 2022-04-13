@@ -15,7 +15,7 @@ const AddCave: React.FC<ContainerProps> = () => {
 		name: "",
 		date_visited: new Date(),
 		description: "",
-		location: { latitude: 0, longitude: 0 },
+		location: { lat: 0, lng: 0 },
 		notes: "",
 	});
 	const [submitted, setSubmitted] = useState(false);
@@ -54,27 +54,27 @@ const AddCave: React.FC<ContainerProps> = () => {
 						<input type={"date"} className="ion-text-end" />
 					</IonItem>
 					<IonItem>
-						<IonLabel position="floating">Latitude</IonLabel>
+						<IonLabel position="floating">lat</IonLabel>
 						<IonInput
 							type="number"
-							value={newCave.location.latitude}
+							value={newCave.location.lat}
 							onIonChange={(e: any) =>
 								setNewCave({
 									...newCave,
-									location: { latitude: e.target.value, longitude: newCave.location.longitude },
+									location: { lat: e.target.value, lng: newCave.location.lng },
 								})
 							}
 						/>
 					</IonItem>
 					<IonItem>
-						<IonLabel position="floating">Longitude</IonLabel>
+						<IonLabel position="floating">lng</IonLabel>
 						<IonInput
 							type="number"
-							value={newCave.location.longitude}
+							value={newCave.location.lng}
 							onIonChange={(e: any) =>
 								setNewCave({
 									...newCave,
-									location: { longitude: e.target.value, latitude: newCave.location.latitude },
+									location: { lng: e.target.value, lat: newCave.location.lat },
 								})
 							}
 						/>
