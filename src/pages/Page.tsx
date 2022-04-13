@@ -28,6 +28,8 @@ const Page: React.FC = () => {
 			setFriendlyName("Caves Map");
 		} else if (name === "sign-in") {
 			setFriendlyName("Sign In");
+		} else if (name === "sign-in") {
+			setFriendlyName("Sign In");
 		} else {
 			setFriendlyName("");
 		}
@@ -42,21 +44,13 @@ const Page: React.FC = () => {
 					<IonButtons slot="start">
 						<IonMenuButton />
 					</IonButtons>
-					<IonTitle>{friendlyName}</IonTitle>
+					<IonTitle>{friendlyName ? friendlyName : 'Cave'}</IonTitle>
 				</IonToolbar>
 			</IonHeader>
 
 			<IonContent fullscreen>
-				<IonHeader collapse="condense">
-					<IonToolbar>
-						<IonTitle className="ion-text-center" size="large">
-							{friendlyName}
-						</IonTitle>
-					</IonToolbar>
-				</IonHeader>
 				{name === "add-cave" ? <AddCave name={name} friendlyName={friendlyName} /> : ""}
 				{name === "all-caves-list" ? <AllCavesList friendlyName={friendlyName} /> : ""}
-				{/* {name === "all-caves-map" ? <AllCavesMap /> : ""} */}
 				{key ? <CaveComponent caveKey={key} /> : ""}
 			</IonContent>
 		</IonPage>

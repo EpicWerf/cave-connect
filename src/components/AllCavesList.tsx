@@ -2,18 +2,20 @@ import {
 	IonButton,
 	IonCard,
 	IonCardContent,
-	IonContent,
 	IonIcon,
 	IonItem,
+	IonItemOption,
+	IonItemOptions,
+	IonItemSliding,
 	IonLabel,
 	IonList,
 	IonSearchbar,
 } from "@ionic/react";
 import { collection, onSnapshot, query } from "firebase/firestore";
-import { pin } from "ionicons/icons";
+import { db, deleteCave, getAllCaves } from "../services/firestore";
 import { useEffect, useState } from "react";
-import { db, getAllCaves } from "../services/firestore";
 import { Cave } from "../types/Cave.types";
+import { pin } from "ionicons/icons";
 import "./AllCavesList.css";
 
 export const streamCaves = (snapshot: any, error: any) => {
@@ -39,34 +41,48 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 	}, []);
 
 	return (
-		<div className="container">
+		<>
 			<IonCard>
 				<IonSearchbar
 					value={searchText}
 					onIonChange={(e) => setSearchText(e.detail.value!)}
 					showCancelButton="focus"
+					className="ion-text-center"
 				></IonSearchbar>
-				{caves.map((cave) => (
-					<IonList key={cave.key}>
-						<IonItem href={`cave/${cave.key}`} className="ion-activated">
-							<IonIcon icon={pin} slot="start" />
-							<IonLabel>{cave.name}</IonLabel>
-						</IonItem>
+				<IonCardContent>
+					<IonList className="container" lines="none" >
+						{caves.map((cave) => (
+							<IonItemSliding>
+								<IonItem key={cave.key} href={`cave/${cave.key}`} className="ion-activated">
+									<IonIcon icon={pin} slot="start" />
+									<IonLabel>{cave.name}</IonLabel>
+								</IonItem>
+								<IonItemOptions side="end">
+									<IonItemOption
+										onClick={() => {
+											deleteCave(cave.key);
+										}}
+										color="danger"
+									>
+										Delete
+									</IonItemOption>
+								</IonItemOptions>
+							</IonItemSliding>
+						))}
 					</IonList>
-				))}
-				<IonItem>
-					<IonButton
-						className="ion-text-center"
-						color="primary"
-						fill="solid"
-						size="default"
-						onClick={() => (window.location.href = "/page/add-cave")}
-					>
-						Add New Cave
-					</IonButton>
-				</IonItem>
+				</IonCardContent>
+
+				<IonButton
+					className="add-button"
+					color="primary"
+					fill="solid"
+					size="default"
+					onClick={() => (window.location.href = "/page/add-cave")}
+				>
+					Add New Cave
+				</IonButton>
 			</IonCard>
-		</div>
+		</>
 	);
 };
 

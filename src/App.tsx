@@ -36,7 +36,7 @@ const App: React.FC = () => {
 						<Route path="/page/:name" exact={true} component={Page} />
 						<Route path="/cave/:key" component={Page} />
 						<Route component={NotFound} />
-						<Route path="/" exact={true}></Route>
+						<Redirect exact from="/" to="/page/all-caves-list" />
 					</IonRouterOutlet>
 				</IonSplitPane>
 			</IonReactRouter>

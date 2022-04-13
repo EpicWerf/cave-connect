@@ -57,23 +57,12 @@ export async function getAllCaves(): Promise<Cave[]> {
 	}
 }
 
-export async function addCave(caveData: Cave): Promise<void> {
-	try {
-		await addDoc(collection(db, "caves"), caveData);
-		console.log("wrote to DB successfully");
-	} catch (error: any) {
-		console.log(error);
-		return error;
-	}
-}
-
 export async function getSingleCave(caveKey: string): Promise<Cave> {
 	try {
 		const docRef = doc(db, "caves", caveKey);
 		const docSnap = await getDoc(docRef);
 
 		let singleCave: Cave = {} as Cave;
-		console.log(docSnap.data());
 
 		if (docSnap.exists()) {
 			singleCave = {
@@ -81,7 +70,10 @@ export async function getSingleCave(caveKey: string): Promise<Cave> {
 				name: docSnap.data().name,
 				date_visited: docSnap.data().date_visited.toDate(),
 				notes: docSnap.data().notes,
-				location: docSnap.data().location,
+				location: {
+					latitude: docSnap.data().location.latitude,
+					longitude: docSnap.data().location.longitude,
+				},
 				description: docSnap.data().description,
 			};
 		}
@@ -93,10 +85,25 @@ export async function getSingleCave(caveKey: string): Promise<Cave> {
 	}
 }
 
-export async function deleteCave(caveKey: string): Promise<void> {
+export async function addCave(caveData: Cave): Promise<void> {
 	try {
-		await deleteDoc(doc(db, "caves", caveKey));
-		console.log(`deleted ${caveKey} from DB successfully`);
+		caveData.location.latitude = Number(caveData.location.latitude);
+		caveData.location.longitude = Number(caveData.location.longitude);
+
+		await addDoc(collection(db, "caves"), caveData);
+		console.log("wrote to DB successfully");
+	} catch (error: any) {
+		console.log(error);
+		return error;
+	}
+}
+
+export async function deleteCave(caveKey: string | undefined): Promise<void> {
+	try {
+		if (caveKey) {
+			await deleteDoc(doc(db, "caves", caveKey));
+			console.log(`deleted ${caveKey} from DB successfully`);
+		}
 	} catch (error: any) {
 		console.log(error);
 		return error;

@@ -1,5 +1,5 @@
 import React from "react";
-import { GoogleMap, InfoBox, LoadScript, Marker } from "@react-google-maps/api";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
 import { MAPS_API_KEY } from "../services/MapsApiKey";
 
 const containerStyle = {
@@ -10,19 +10,20 @@ const containerStyle = {
 interface MapProps {
 	lat: number;
 	lng: number;
+	name: string | undefined;
 }
 
 function MapComponent(props: MapProps) {
-	const { lat, lng } = props;
+	const { lat, lng, name } = props;
 	const caveLocation = {
 		lat: lat,
 		lng: lng,
 	};
+
 	return (
 		<LoadScript googleMapsApiKey={MAPS_API_KEY}>
 			<GoogleMap mapContainerStyle={containerStyle} center={caveLocation} zoom={10}>
-				{/* Child components, such as markers, info windows, etc. */}
-				<Marker position={caveLocation}  />
+				{caveLocation ? <Marker position={caveLocation} label={name} /> : null}
 			</GoogleMap>
 		</LoadScript>
 	);

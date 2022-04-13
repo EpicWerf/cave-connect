@@ -4,8 +4,8 @@ export interface Cave {
 	date_visited: Date;
 	description: string;
 	location: {
-		latitude: string;
-		longitude: string;
+		latitude: number;
+		longitude: number;
 	};
 	notes: string;
 }
