@@ -17,6 +17,7 @@ import { useEffect, useState } from "react";
 import { Cave } from "../types/Cave.types";
 import { pin } from "ionicons/icons";
 import "./AllCavesList.css";
+import { Redirect } from "react-router";
 
 export const streamCaves = (snapshot: any, error: any) => {
 	const cavesCollection = collection(db, "caves");
@@ -31,6 +32,11 @@ interface ContainerProps {
 const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 	const [caves, setCaves] = useState<Cave[]>([]);
 	const [searchText, setSearchText] = useState("");
+
+	const deleteCaveAndReturn = async (caveKey: string | undefined) => {
+		await deleteCave(caveKey);
+		window.location.href = "/page/all-caves-list";
+	};
 
 	useEffect(() => {
 		const fetchCaves = async () => {
@@ -50,20 +56,15 @@ const AllCavesList: React.FC<ContainerProps> = ({ friendlyName }) => {
 					className="ion-text-center"
 				></IonSearchbar>
 				<IonCardContent>
-					<IonList className="container" lines="none" >
+					<IonList className="container" lines="none">
 						{caves.map((cave) => (
-							<IonItemSliding>
-								<IonItem key={cave.key} href={`cave/${cave.key}`} className="ion-activated">
+							<IonItemSliding key={cave.key}>
+								<IonItem href={`cave/${cave.key}`} className="ion-activated">
 									<IonIcon icon={pin} slot="start" />
 									<IonLabel>{cave.name}</IonLabel>
 								</IonItem>
 								<IonItemOptions side="end">
-									<IonItemOption
-										onClick={() => {
-											deleteCave(cave.key);
-										}}
-										color="danger"
-									>
+									<IonItemOption onClick={() => deleteCaveAndReturn(cave.key)} color="danger">
 										Delete
 									</IonItemOption>
 								</IonItemOptions>

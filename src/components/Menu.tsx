@@ -7,24 +7,16 @@ import {
 	IonListHeader,
 	IonMenu,
 	IonMenuToggle,
-	IonNote,
 } from "@ionic/react";
 
 import { useLocation } from "react-router-dom";
 import {
-	archiveOutline,
-	archiveSharp,
-	bookmarkOutline,
-	heartOutline,
-	heartSharp,
-	mailOutline,
-	mailSharp,
-	paperPlaneOutline,
-	paperPlaneSharp,
-	trashOutline,
-	trashSharp,
-	warningOutline,
-	warningSharp,
+	mapOutline,
+	mapSharp,
+	flagOutline,
+	flagSharp,
+	addCircleOutline,
+	addCircleSharp,
 } from "ionicons/icons";
 import "./Menu.css";
 
@@ -36,33 +28,25 @@ interface AppPage {
 }
 
 const appPages: AppPage[] = [
-	// {
-	// 	title: "Sign In",
-	// 	url: "/page/sign-in",
-	// 	iosIcon: mailOutline,
-	// 	mdIcon: mailSharp,
-	// },
 	{
 		title: "Caves List",
 		url: "/page/all-caves-list",
-		iosIcon: mailOutline,
-		mdIcon: mailSharp,
+		iosIcon: flagOutline,
+		mdIcon: flagSharp,
 	},
 	{
 		title: "Caves Map",
 		url: "/page/all-caves-map",
-		iosIcon: heartOutline,
-		mdIcon: heartSharp,
+		iosIcon: mapOutline,
+		mdIcon: mapSharp,
 	},
 	{
 		title: "Add New Cave",
 		url: "/page/add-cave",
-		iosIcon: paperPlaneOutline,
-		mdIcon: paperPlaneSharp,
+		iosIcon: addCircleOutline,
+		mdIcon: addCircleSharp,
 	},
 ];
-
-// const labels = ["Family", "Friends", "Notes", "Work", "Travel", "Reminders"];
 
 const Menu: React.FC = () => {
 	const location = useLocation();
@@ -89,16 +73,6 @@ const Menu: React.FC = () => {
 						);
 					})}
 				</IonList>
-
-				{/* <IonList id="labels-list">
-					<IonListHeader>Labels</IonListHeader>
-					{labels.map((label, index) => (
-						<IonItem lines="none" key={index}>
-							<IonIcon slot="start" icon={bookmarkOutline} />
-							<IonLabel>{label}</IonLabel>
-						</IonItem>
-					))}
-				</IonList> */}
 			</IonContent>
 		</IonMenu>
 	);

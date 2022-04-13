@@ -56,7 +56,6 @@ const AddCave: React.FC<ContainerProps> = () => {
 					<IonItem>
 						<IonLabel position="floating">lat</IonLabel>
 						<IonInput
-							type="number"
 							value={newCave.location.lat}
 							onIonChange={(e: any) =>
 								setNewCave({
@@ -69,7 +68,6 @@ const AddCave: React.FC<ContainerProps> = () => {
 					<IonItem>
 						<IonLabel position="floating">lng</IonLabel>
 						<IonInput
-							type="number"
 							value={newCave.location.lng}
 							onIonChange={(e: any) =>
 								setNewCave({
