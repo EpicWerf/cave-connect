@@ -1,1 +1,16 @@
-Maps code used from Dr. Liddles' typescript maps project
+Important Features
+* Caves List
+    * Search bar works!
+    * Swipe to the left to delete a given cave
+* Single Cave
+    * Cave location (above name) is dynamically built using Google's Reverse Geocoding API (based on lat/lng)
+    * Live data being pulled from Firestore
+    * Delete functionality
+    * Map shows location of specific cave that the user clicked on
+* Caves Map
+    * Uses Google Maps API to display locations for all caves in Firestore on a map
+    * Pins are generated automatically as the page loads
+    * API key is locked so only requests from "https://master.d16b0joep18at6.amplifyapp.com/" are allowed
+* CRD Functionality for interactions with Firestore DB
+    * I have never used Firestore before, so this was a learning opportunity for me
+* Fully mobile responsive (and looks good too :) )
